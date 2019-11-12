@@ -39,6 +39,7 @@
 <style lang="scss" scoped>
   .app-container {
     padding-top: 30px;
+		padding-bottom: 50px;
 		overflow-x: hidden;
 		position: relative;
   }
