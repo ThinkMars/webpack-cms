@@ -5,6 +5,8 @@ import VueResource from 'vue-resource'
 Vue.use(VueResource)
 // 设置根路径  这是外部的接口地址
 Vue.http.options.root = 'http://www.liulongbin.top:3005/';
+// 设置post请求时的数据格式，默认为JSON
+Vue.http.options.emulateJSON = true;
 
 // 1.导入路由的 模块
 import VueRouter from 'vue-router'
@@ -32,14 +34,26 @@ import router from './router.js'
 import app from './App.vue'
 
 // 按需导入Mint-UI 组件
-import { Header, Swipe, SwipeItem, Button } from 'mint-ui'
-Vue.component(Header.name, Header);
-Vue.component(Swipe.name, Swipe);
-Vue.component(SwipeItem.name, SwipeItem);
-Vue.component(Button.name, Button);
+// import { Header, Swipe, SwipeItem, Button, Lazyload } from 'mint-ui'
+// Vue.component(Header.name, Header);
+// Vue.component(Swipe.name, Swipe);
+// Vue.component(SwipeItem.name, SwipeItem);
+// Vue.component(Button.name, Button);
+// // Vue.component(Lazyload.name, Lazyload);
+// Vue.use(Lazyload)
+
+// 全部导入Mint-UI
+import MintUI from 'mint-ui'
+Vue.use(MintUI)
+import 'mint-ui/lib/style.css'
+
+// 安装图片预览插件
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview)
 
 let vm = new Vue({
   el: '#app',
+  // 插值app组件
   render: c => c(app),
   // 3.挂在路由对象到实例上
   router

@@ -1,12 +1,9 @@
 <template>
   <div>
-    <!-- <h1>首页组件</h1> -->
+    <!-- 轮播图区域 -->
     <!-- 自动播放，4秒一次 -->
-    <mt-swipe :auto="3000">
-      <mt-swipe-item class="slide1" v-for="item in SwipePhotos" :key="item.url">
-        <img :src="item.url" alt />
-      </mt-swipe-item>
-    </mt-swipe>
+    <!-- 通过绑定，父组件向子组件传值 -->
+    <swiper :SwipePhotos="SwipePhotos" :isfull="true"></swiper>
 
     <!-- 选用 六个格子成六宫格 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
@@ -17,24 +14,24 @@
         </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/photolist">
           <span class="mui-icon mui-icon-email">
-            <span class="mui-badge">5</span>
+            <!-- <span class="mui-badge"></span> -->
           </span>
-          <div class="mui-media-body">消息</div>
-        </a>
+          <div class="mui-media-body">图片分享</div>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <a href="#">
           <span class="mui-icon mui-icon-chatbubble"></span>
-          <div class="mui-media-body">图片反馈</div>
+          <div class="mui-media-body">反馈</div>
         </a>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/goodslist">
           <span class="mui-icon mui-icon-location"></span>
           <div class="mui-media-body">商品购买</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <a href="#">
@@ -56,6 +53,7 @@
 <script>
 // 按需导入组件
 import { Toast } from "mint-ui";
+import swiper from '../subconponents/swiper.vue'
 
 export default {
   data() {
@@ -73,44 +71,22 @@ export default {
       this.$http.jsonp("https://api.asilu.com/bg/").then(result => {
         if (result.status === 200) {
           //成功了
-          console.log(result.body.images[0].url);
+          // console.log(result.body.images[0].url);
           this.SwipePhotos = result.body.images;
-          // Toast("加载轮播图失败");
         } else {
           //失败
           Toast("加载轮播图失败");
         }
       });
     }
+  },
+  components: {
+    swiper
   }
 };
 </script>
 
 <style lang="scss">
-.mint-swipe {
-  height: 200px;
-  margin-top: 10px;
-
-  // 嵌套写法
-
-  .mint-swipe-item {
-    // & 为交集选择器符号
-    &:nth-child(1) {
-      background-color: red;
-    }
-    &:nth-child(2) {
-      background-color: blue;
-    }
-    &:nth-child(3) {
-      background-color: green;
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-}
 
 .mui-grid-view.mui-grid-9 {
   background-color: #fff;

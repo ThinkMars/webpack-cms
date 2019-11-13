@@ -33,7 +33,7 @@ export default {
     getNewsList () {
       this.$http.get('api/getnewslist').then((data) => {
         if (data.body.status === 0) {
-          console.log(data.body.message);
+          // console.log(data.body.message);
           this.newslist = data.body.message;
         }else {
           Toast('获取新闻列表失败');

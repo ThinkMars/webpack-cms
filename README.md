@@ -56,3 +56,61 @@
 1. 为加载更多按钮加载点击事件，在事件中加载下一页数据
 2. 点击 加载更多 按钮， 让pageIndex 自增， 再调用getComments 方法，获取下一页方法
 3. 为了防止新数据覆盖老数据的情况，在加载新页面的时候，调用数组方法concat拼接新数据
+
+## 发表评论
+1. 为文本框双向绑定
+2. 为发表按钮绑定点击事件
+3. 检验评论内容是否为空，如果为空，Toast提示用户 评论内容不能为空，如果不为空，则发送请求，将请求发送给服务器
+4. 当发表评论OK后，重新刷新列表，查看最新的评论
+ + 如果调用getConment刷新列表，可能只看到最后一页 的评论，前几页的数据获取不到，
+ + 换一种思路：当评论成功后，在客户端手动拼接一个 最新的评论对象，然后调用数组的unshift方法，把最新的评论追加到
+   data中conments 的开头；这样就能完美实现刷新评论列表的功能
+
+## 制作顶部滑动条
+1. 借助MUI的 tab-top-swapper
+2. 删除 mui-fullscreen 类的影响
+3. 滑动条无法正常的滑动，查找官方文档发现 这是一个JS组件，需要初始化
+ + 导入 mui.js
+ + 调用官方提供的方法去初始化
+ ```
+ mui('.mui-scroll-wrapper').scroll({
+	deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+});
+ ```
+4. 我们在初始化 滑动条的时候，导入mui.js出错：`Uncaught TypeError: 'caller', 'callee', and 'arguments' properties may not be accessed on strict mode functions or the arguments objects for calls to them`
+ + 经过我们合理推测，觉得可能是 mui.js 中用到了 'caller' 'callee' 'arguments' ,但是 webpack 打包好的 bundle.js中， 默认开启 严格模式 ，所以这两者冲突了
+  + 解决方法：移除 webpack 中的严格模式   用插件 babel-plugin-transform-remove-strict-mode
+   +  1. cnpm install babel-plugin-transform-remove-strict-mode -D
+   +  2. 在.babelrc中设置：
+      `{
+        "plugins": ["transform-remove-strict-mode"]
+      }`
+   +  3. 第二种方法 ：在 .babelrc 文件添加以下代码 忽视该js文件 
+      `{
+        "ignore": [
+          "./src/lib/mui/js/mui.js"
+        ]
+      }` 
+   +  4. 当滑动条调试 OK后，发现 tabbar 无法正常工作，这时候我们把每个tabbar按钮中的样式`mui-tab-item`重新改一下名字
+
+### 制作图片列表区域
+1. 图片列表渲染需要用懒加载技术，我们可以用 Mint-UI 里的组件 `lazy-load`
+2. 使用 `lazy-load` 渲染数据
+
+### 实现了懒加载与图片样式美化
+
+## 实现 点击图片跳转到 图片详情页面 
+1. 在改造 router-link 元素时，需要用 tag 指定属性要渲染为 哪种元素  tag="li"
+
+## 实现详情页面的布局与美化，同时渲染页面
+
+## 实现 图片详情中 缩略图的功能
+1. 使用插件 vue-preview 
+2. 获取所有的图片列表，然后用v-for 指令渲染数据
+3. 注意：img标签上的class不能去掉
+4. 注意：每个图片对象数据中必须有 w 和 h 属性
+
+## 尝试在手机上 调试和预览项目
+1. 保证手机和电脑处于同一个WiFi中
+2. 在自己项目的package.json文件中，在 dev 脚本中，添加一个 --host 指令，把当前电脑的WiFi IP地址，设置为 --host 的指令值
+ + 在cmd 中运行 `ipconfig` 查看无线网的 IP地址
