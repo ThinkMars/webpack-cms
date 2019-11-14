@@ -109,7 +109,12 @@ export default {
     },
     addToShopCar () {
       // 添加购物车
-      this.ballFlag = !this.ballFlag
+      this.ballFlag = !this.ballFlag;
+      // { id: 商品id, count: 商品数量, price: 商品的单价, selected: 商品是否被选中 }
+
+      // 拼接出一个store 中的car数组中的对象
+      let goodsinfo = { id: this.id, count: this.selectedCount, price: this.goodsinfo.sell_price, selected: true };
+      this.$store.commit('addToCar', goodsinfo);
     },
     beforeEnter (el) {
       el.style.transform = 'translate(0, 0)';
