@@ -11,7 +11,7 @@ Vue.use(Vuex)
 let car = JSON.parse(localStorage.getItem('car'|| '[]'));
 const store = new Vuex.Store({
   state: { // this.$store.state.***
-    //car: [] // 将购物车中商品的数据用一个数组存起来，在car数组中存商品的对象，咱们可以暂时将商品的对象设计成
+    // car: [] // 将购物车中商品的数据用一个数组存起来，在car数组中存商品的对象，咱们可以暂时将商品的对象设计成
     // { id: 商品id, count: 商品数量, price: 商品的单价, selected: 商品是否被选中 }
     car: car
   },
