@@ -8,7 +8,7 @@ Vue.use(VueResource)
 import Vuex from 'vuex'
 Vue.use(Vuex)
 // 每次刚进入网站，肯定会调用index.js，在调用的时候，在本地存储中把购物车的数据放到car 中
-let car = JSON.parse(localStorage.getItem('car'|| '[]'));
+let car = JSON.parse(localStorage.getItem('car')||'[]');
 const store = new Vuex.Store({
   state: { // this.$store.state.***
     // car: [] // 将购物车中商品的数据用一个数组存起来，在car数组中存商品的对象，咱们可以暂时将商品的对象设计成
@@ -71,7 +71,7 @@ const store = new Vuex.Store({
   getters: { // this.$store.getters.***
     getAllCount (state) {
       let c = 0;
-      state.car.forEach((item) => {
+      state.car.forEach(item => {
         c += item.count;
       })
       return c;

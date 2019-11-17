@@ -82,7 +82,7 @@ export default {
   methods: {
     getLunbotu () {
       this.$http.get('api/getthumimages/' + this.id)
-      .then ((result) => {
+      .then (result => {
         if (result.body.status === 0) {              
           // 先循环轮播图数组中的每一项，为item添加 url 属性，因为轮播图中，只认识item.url,不认识 item.src
           result.body.message.forEach(element => {
